@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import React from "react";
 
 import "./globals.css";
+import Navbar from "@/components/navigation/navbar/page";
 import ThemeProvider from "@/context/Theme";
 
 const inter = localFont({
@@ -34,9 +35,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} ${spaceGrotesk.variable}  antialiased`}
+        className={`${inter.className} ${spaceGrotesk.className}  antialiased`}
       >
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
