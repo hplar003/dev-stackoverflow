@@ -25,7 +25,7 @@ const TagCard = ({ _id, name, questions, showCount, compact }: Props) => {
         </div>
       </Badge>
       {showCount && (
-        <p className="small-medium text-dark500_light700">{questions}</p>
+        <p className="small-medium text-dark500_light700">{questions}+</p>
       )}
     </Link>
   );
