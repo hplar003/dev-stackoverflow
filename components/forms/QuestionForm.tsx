@@ -9,7 +9,6 @@ import { z } from "zod";
 import { AskQuestionSchema } from "@/lib/validations";
 
 import TagCard from "../cards/TagCard";
-import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -120,7 +119,7 @@ const QuestionForm = () => {
                     <Editor
                       editorRef={editorRef}
                       value={field.value}
-                      onChange={field.onChange}
+                      fieldChange={field.onChange}
                     />
                   </FormControl>
                   <FormDescription className="body-regular mt-2.5 text-light-500">
