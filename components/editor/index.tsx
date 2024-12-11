@@ -116,7 +116,7 @@ const Editor = ({ editorRef, value, fieldChange, ...props }: EditorProps) => {
         ]}
         {...props}
         ref={editorRef}
-        className="background-light800_dark400 light-border-2  markdown-editor dark-editor w-full border"
+        className="background-light800_dark400 light-border-2  markdown-editor dark-editor grid w-full border"
       />
     </div>
   );
