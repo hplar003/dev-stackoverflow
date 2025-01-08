@@ -83,16 +83,6 @@ const Home = async ({ searchParams }: SearchParams) => {
           <QuestionCard key={question._id} question={question} />
         ))}
       </div>
-      {/* <form
-        className="px-10 pt-[100px]"
-        action={async () => {
-          "use server";
-
-          await signOut({ redirectTo: ROUTES.SIGN_IN });
-        }}
-      >
-        <Button type="submit">Log out</Button>
-      </form> */}
     </>
   );
 };
