@@ -28,7 +28,7 @@ export interface IUser {
   /**
    * The URL of the user's image.
    */
-  image: string;
+  image?: string;
 
   /**
    * The location of the user.
@@ -82,7 +82,7 @@ const UserSchema = new Schema(
     username: { type: String, required: true },
     email: { type: String, required: true },
     bio: { type: String },
-    image: { type: String, required: true },
+    image: { type: String },
     location: { type: String },
     portfolio: { type: String },
     reputation: { type: Number, default: 0 },
@@ -93,6 +93,6 @@ const UserSchema = new Schema(
 /**
  * This is the model for the user schema.
  */
-const user = models?.user || model<IUser>("user", UserSchema);
+const User = models?.User || model<IUser>("User", UserSchema);
 
-export default user;
+export default User;
