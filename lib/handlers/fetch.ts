@@ -16,11 +16,15 @@ export async function fetchHandler<T>(
   url: string,
   options: FetchOptions = {}
 ): Promise<ActionResponse<T>> {
-  const { timeout = 5000, headers: customHeaders, ...restOptions } = options;
+  const {
+    timeout = 5000,
+    headers: customHeaders = {},
+    ...restOptions
+  } = options;
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
   const defaultHeaders: HeadersInit = {
-    "content-type": "application/json",
+    "Content-Type": "application/json",
     Accept: "application/json",
   };
   const headers: HeadersInit = { ...defaultHeaders, ...customHeaders };
@@ -36,7 +40,7 @@ export async function fetchHandler<T>(
     if (!response.ok) {
       throw new RequestError(
         response.status,
-        `HTTP Error: ${response.statusText}`
+        `HTTP Error in fetch: ${response.statusText}`
       );
     }
     return await response.json();
