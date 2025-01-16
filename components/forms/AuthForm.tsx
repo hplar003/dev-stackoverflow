@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import {
   DefaultValues,
@@ -15,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,12 +23,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ROUTES from "@/constants/routes";
+import { toast } from "@/hooks/use-toast";
+import { ActionResponse } from "@/types/global";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: z.ZodSchema<T>;
   defaultValues: T;
   formType: "SIGN_UP" | "SIGN_IN";
-  onSubmit: (data: T) => Promise<{ success: boolean; data: T }>;
+  onSubmit: (data: T) => Promise<ActionResponse>;
 }
 
 const AuthForm = <T extends FieldValues>({
@@ -37,6 +39,7 @@ const AuthForm = <T extends FieldValues>({
   formType,
   onSubmit,
 }: AuthFormProps<T>) => {
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -44,8 +47,25 @@ const AuthForm = <T extends FieldValues>({
   });
 
   // 2. Define a submit handler.
-  const handleSubmit: SubmitHandler<T> = async () => {
-    // Authenticate user
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    console.log(data);
+    const result = (await onSubmit(data)) as ActionResponse;
+    if (result?.success) {
+      toast({
+        title: "Success",
+        description:
+          formType === "SIGN_IN"
+            ? "Signed In Successfully"
+            : "Signed Up Successfully",
+      });
+      router.push(ROUTES.HOME);
+    } else {
+      toast({
+        title: `Error ${result?.status}`,
+        description: result?.error?.message,
+        variant: "destructive",
+      });
+    }
   };
 
   const buttonText = formType === "SIGN_UP" ? "Sign Up" : "Sign In";
@@ -99,7 +119,7 @@ const AuthForm = <T extends FieldValues>({
           </Button>
           {formType === "SIGN_IN" ? (
             <p>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href={ROUTES.SIGN_UP}
                 className="paragraph-semibold primary-text-gradient"

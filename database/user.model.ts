@@ -1,51 +1,20 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, Schema, Document } from "mongoose";
 
-/**
- * Interface representing a user in the application.
- */
 export interface IUser {
-  /**
-   * The name of the user.
-   */
   name: string;
 
-  /**
-   * The username of the user.
-   */
   username: string;
 
-  /**
-   * The email of the user.
-   */
   email: string;
 
-  /**
-   * The bio of the user.
-   * Optional field.
-   */
   bio?: string;
 
-  /**
-   * The URL of the user's image.
-   */
   image?: string;
 
-  /**
-   * The location of the user.
-   * Optional field.
-   */
   location?: string;
 
-  /**
-   * The URL of the user's portfolio.
-   * Optional field.
-   */
   portfolio?: string;
 
-  /**
-   * The reputation score of the user.
-   * Optional field. Defaults to 0 if not specified.
-   */
   reputation?: number;
 }
 
@@ -75,6 +44,8 @@ export interface IUser {
  *   portfolio: "https://example.com/john-doe"
  * }
  */
+
+export interface IUserDoc extends IUser, Document {}
 
 const UserSchema = new Schema(
   {
